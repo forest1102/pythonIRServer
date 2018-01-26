@@ -18,31 +18,53 @@ import os
 import sys
 
 # for RPI version 1, use "bus = smbus.SMBus(0)"
-bus = smbus.SMBus(1)
+bus               = smbus.SMBus(1)
 
 # This must match in the Arduino Sketch
-#SLAVE_ADDRESS = 0x04
-SLAVE_ADDRESS = 0x52
-data_numH = 0x31
-data_numL = 0x32
-data_numHL = [0x00,0x31,0x32]
-data_num = 10
-memo_no = 0
-block = []
+#SLAVE_ADDRESS    = 0x04
+SLAVE_ADDRESS     = 0x52
+data_numH         = 0x31
+data_numL         = 0x32
+data_numHL        = [0x00,0x31,0x32]
+data_num          = 10
+memo_no           = 0
+block             = []
 
 #command
-R1_memo_no_write = 0x15  #bus-write(ADR,cmd,1)
-R2_data_num_read = 0x25 #bus-read(ADR,cmd,3)
-R3_data_read           = 0x35 #bus-read(ADR,cmd,n)
+R1_memo_no_write  = 0x15 #bus-write(ADR,cmd,1)
+R2_data_num_read  = 0x25 #bus-read(ADR,cmd,3)
+R3_data_read      = 0x35 #bus-read(ADR,cmd,n)
 W1_memo_no_write  = 0x19 #bus-write(ADR,cmd,1)
 W2_data_num_write = 0x29 #bus-write(ADR,cmd,3)
-W3_data_write           = 0x39 #bus-read(ADR,cmd,n)
-W4_flash_write           = 0x49 #bus-read(ADR,cmd,n)
-T1_trans_start             = 0x59 #bus-write(ADR,cmd,1)
+W3_data_write     = 0x39 #bus-read(ADR,cmd,n)
+W4_flash_write    = 0x49 #bus-read(ADR,cmd,n)
+T1_trans_start    = 0x59 #bus-write(ADR,cmd,1)
 
 ############# read command
 
+def read_command(memo_no):
+# cmd R1_memo_no_write 0x15 bus-write(ADR,cmd,1)
+    print("memo_no write=",memo_no)
+    bus.write_i2c_block_data(SLAVE_ADDRESS, R1_memo_no_write ,memo_no )   #= 0x15  #bus-write(ADR,cmd,1)
 
+# cmd R2_data_num_read 0x25 bus-read(ADR,cmd,3)
+    data_numHL = bus.read_i2c_block_data(SLAVE_ADDRESS, R2_data_num_read ,3 )#= 0x25 #bus-read(ADR,cmd,3)
+    data_num = data_numHL[1]
+    data_num *= 256
+    data_num += data_numHL[2]
+    print("data_num =",data_num )
+
+# cmd R3_data_read           0x35 bus-read(ADR,cmd,n)
+    block = []
+    block_dat  = bus.read_i2c_block_data(SLAVE_ADDRESS, R3_data_read , 1)       #= 0x35 #bus-read(ADR,cmd,n)
+    for i in range(data_num ):
+     block_dat  = bus.read_i2c_block_data(SLAVE_ADDRESS, R3_data_read , 4)       #= 0x35 #bus-read(ADR,cmd,n)
+     block.append(block_dat[0])
+     block.append(block_dat[1])
+     block.append(block_dat[2])
+     block.append(block_dat[3])
+    print(block)  #for denug
+    return data_num
 ################# write command
 
 

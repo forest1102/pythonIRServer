@@ -2,7 +2,7 @@
 
 from flask import Flask, flash, redirect, render_template, request, session, abort,jsonify
 import numpy as np
-from command import trans_command
+from command import trans_command,read_command
 # 自身の名称を app という名前でインスタンス化する
 app = Flask(__name__)
 IRCodes=[] 
@@ -28,7 +28,9 @@ def transIRCode():
     print(request.form['code'])
     trans_command(request.form['code'])
     return 'success'
-
+@app.route('/codeFrom/<int:memo_no>')
+def codeFrom(memo_no):
+    return read_command(memo_no)
 if __name__ == '__main__':
     app.debug = True # デバッグモード有効化
     app.run(host='0.0.0.0') # どこからでもアクセス可能に
