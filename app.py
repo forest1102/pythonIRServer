@@ -32,7 +32,7 @@ def transIRCode():
 def codeFrom(memo_no):
     print(memo_no,type(memo_no))
     code=(read_coumand([memo_no]))    
-    print(command,type(command))
+    print(code,type(code))
     return '111'
 if __name__ == '__main__':
     app.debug = True # デバッグモード有効化
