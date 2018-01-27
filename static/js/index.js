@@ -27,7 +27,7 @@ $(function ()
 								code: code
 							}
 						})
-						.done(function (data)
+						.done(function (d)
 						{
 							console.log(d)
 							var IRli = $('<li><button type="button" class="btn btn-primary">' + d.name + '</button></li>')
