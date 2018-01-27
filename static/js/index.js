@@ -1,17 +1,6 @@
 $(function ()
 {
 	console.log('start jquery')
-	$('#getIRCode')
-		.submit(function (e)
-		{
-			e.preventDefault()
-			$.ajax('/code-from/' + $('#memo_no')
-					.val())
-				.done(function (d)
-				{
-					console.log(d);
-				})
-		})
 	$('#addIRCode')
 		.on('submit', function (e)
 		{
@@ -21,46 +10,42 @@ $(function ()
 			console.log('clicked ircode')
 			$.ajax(
 				{
-					url: '/addcode',
-					type: 'POST',
-					data:
-					{
-						'name': $('#name')
-							.val(),
-						'code': $('#code')
-							.val()
-					}
+					url: '/code-from' + $('#memo_no'),
 				})
-				.done(function (d)
+				.done(function (code)
 				{
-					console.log(d)
-					var IRli = $('<li><button type="button" class="btn btn-primary">' + d.name + '</button></li>')
-
-					$('button', IRli)
-						.click(
-							function (event)
-							{
-								event.preventDefault()
-								$.ajax(
-									{
-										url: '/code',
-										type: 'POST',
-										data:
-										{
-											'code': d.code
-										}
-									})
-									.done(function (data)
-									{
-										console.log(data)
-									})
-
-							})
-
-
-					$('#IRCodeList')
-						.append(IRli)
+					console.log(code);
 				})
+			// .done(function (data)
+			// {
+			// 	console.log(d)
+			// 	var IRli = $('<li><button type="button" class="btn btn-primary">' + d.name + '</button></li>')
+			// 
+			// 	$('button', IRli)
+			// 		.click(
+			// 			function (event)
+			// 			{
+			// 				event.preventDefault()
+			// 				$.ajax(
+			// 					{
+			// 						url: '/code',
+			// 						type: 'POST',
+			// 						data:
+			// 						{
+			// 							'code': d.code
+			// 						}
+			// 					})
+			// 					.done(function (data)
+			// 					{
+			// 						console.log(data)
+			// 					})
+			// 
+			// 			})
+			// 
+			// 
+			// 	$('#IRCodeList')
+			// 		.append(IRli)
+			// })
 		})
 
 
