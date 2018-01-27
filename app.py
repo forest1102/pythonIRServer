@@ -16,9 +16,9 @@ def addCode():
     print('requested')
     if request.method == 'POST':
         IRcode={}
-	    IRcode['name']=request.form['name']	
-	    IRcode['code']=request.form['code']
-	    IRCodes.append(IRcode)
+        IRcode['name']=request.form['name']	
+        IRcode['code']=request.form['code']
+        IRCodes.append(IRcode)
 	print(IRCodes)
        	return jsonify(IRcode)
     else:
@@ -30,7 +30,8 @@ def transIRCode():
     return 'success'
 @app.route('/code-from/<int:memo_no>')
 def codeFrom(memo_no):
-    return read_command(memo_no)
+    print(read_command(int(memo_no)))    
+    return '111'
 if __name__ == '__main__':
     app.debug = True # デバッグモード有効化
     app.run(host='0.0.0.0') # どこからでもアクセス可能に

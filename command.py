@@ -107,7 +107,7 @@ def write_command(memo_no,block2):
 # cmd W2_data_num_write 0x29 bus-write(ADR,cmd,3)
     data_num = int(len(int_tmp)//4)  #for test
     data_numHL = [0x31,0x32] #for test
-    data_numHL[0] = int(data_num/256)
+    data_numHL[0] = int(data_num//256)
     data_numHL[1] = int(data_num%256)
     #print(data_numHL ,data_numHL[0] ,data_numHL[1])
     bus.write_i2c_block_data(SLAVE_ADDRESS, W2_data_num_write ,  data_numHL)   #= 
