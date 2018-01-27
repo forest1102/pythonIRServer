@@ -157,3 +157,51 @@ def trans_command(block2):
  # cmd T1_trans_start             0x59 bus-write(ADR,cmd,1)
     memo_no = [0x00 ] #for dummy
     bus.write_i2c_block_data(SLAVE_ADDRESS, T1_trans_start,memo_no )   #= 
+
+###########################   main
+dir_name = '/home/pi/I2C0x52-IR/'
+os.chdir(dir_name)
+    
+while True:
+    argvc = sys.argv
+    argc = len(argvc)
+    if  (argc  == 3):
+       command = sys.argv[1]
+       memo_no= [0x0 ] #エラー対策TypeError: 'int' 
+       if command == 'r' :
+           res_data = [141,0,47,0] #bin num [0x141, 0x0, 0x68, 0x0]
+           memo_no= [0x0 ] #エラー対策TypeError: 'int' 
+           memo_no[0]= int(sys.argv[2])
+           #print(memo_no)  
+           res_data = read_command(memo_no)
+           for i in range(len(res_data)):
+             print('{:02X}'.format(res_data[i]), end=""); #141
+           print('')          
+           break
+           
+    if  (argc  == 4):
+       command = sys.argv[1]
+       if command == 'w' :
+           #print("sys.argv[3]=",sys.argv[3])
+           
+           #print("w_mode_start")
+           block2 = sys.argv[3]
+           #print(block2)
+           memo_no= [0x0 ] #エラー対策TypeError: 'int' 
+           memo_no[0]= int(sys.argv[2])
+
+           write_command(memo_no,block2)
+           break   
+    if  (argc  == 3):
+       command = sys.argv[1]           
+       if command == 't' :
+           #print("sys.argv[2]=",sys.argv[2])
+           
+           #print("trans_start")
+           block2 = sys.argv[2]
+           #print(block2)
+           write_command(memo_no,block2)
+           break   
+
+    print("end")
+    break
