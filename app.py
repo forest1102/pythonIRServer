@@ -30,7 +30,7 @@ def transIRCode():
     return 'success'
 @app.route('/code-from/<int:memo_no>')
 def codeFrom(memo_no):
-    print(memo_no,type(memo_noj))
+    print(memo_no,type(memo_no))
     code=(read_coumand([memo_no]))    
     print(command,type(command))
     return '111'
