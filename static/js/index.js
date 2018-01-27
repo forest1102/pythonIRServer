@@ -5,7 +5,7 @@ $(function ()
 		.submit(function (e)
 		{
 			e.preventDefault()
-			$.ajax('/code-from' + $('#memo_no')
+			$.ajax('/code-from/' + $('#memo_no')
 					.val())
 				.done(function (d)
 				{
