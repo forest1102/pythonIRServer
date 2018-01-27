@@ -16,19 +16,19 @@ def addCode():
     print('requested')
     if request.method == 'POST':
         IRcode={}
-	IRcode['name']=request.form['name']	
-	IRcode['code']=request.form['code']
-	IRCodes.append(IRcode)
+	    IRcode['name']=request.form['name']	
+	    IRcode['code']=request.form['code']
+	    IRCodes.append(IRcode)
 	print(IRCodes)
        	return jsonify(IRcode)
     else:
         return render_template('index.html')
-@app.route('/code',methods=['POST'])
+@app.route('/code',methods=['GET','POST'])
 def transIRCode():
     print(request.form['code'])
     trans_command(request.form['code'])
     return 'success'
-@app.route('/codeFrom/<int:memo_no>')
+@app.route('/code-from/<int:memo_no>')
 def codeFrom(memo_no):
     return read_command(memo_no)
 if __name__ == '__main__':
