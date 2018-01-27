@@ -10,7 +10,8 @@ $(function ()
 			console.log('clicked ircode')
 			$.ajax(
 				{
-					url: '/code-from/' + $('#memo_no'),
+					url: '/code-from/' + $('#memo_no')
+						.val(),
 				})
 				.done(function (code)
 				{
