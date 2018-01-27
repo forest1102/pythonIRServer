@@ -30,8 +30,10 @@ def transIRCode():
     return 'success'
 @app.route('/code-from/<int:memo_no>')
 def codeFrom(memo_no):
-    print(memo_no,type(memo_no))
-    return(read_command([memo_no]))    
+    print(memo_no,type(memo_noj))
+    code=(read_coumand([memo_no]))    
+    print(command,type(command))
+    return '111'
 if __name__ == '__main__':
     app.debug = True # デバッグモード有効化
     app.run(host='0.0.0.0') # どこからでもアクセス可能に
