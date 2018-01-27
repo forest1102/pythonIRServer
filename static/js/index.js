@@ -18,6 +18,7 @@ $(function ()
 					console.log(code);
 					$.ajax(
 						{
+							url: '/addcode'
 							type: 'POST',
 							data:
 							{
