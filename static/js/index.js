@@ -16,42 +16,43 @@ $(function ()
 				.done(function (code)
 				{
 					console.log(code);
+					$.ajax(
+						{
+							type: 'POST',
+							data:
+							{
+								name: $('#name')
+									.val(),
+								code: code
+							}
+						})
+						.done(function (data)
+						{
+							console.log(d)
+							var IRli = $('<li><button type="button" class="btn btn-primary">' + d.name + '</button></li>')
+
+							$('button', IRli)
+								.click(
+									function (event)
+									{
+										event.preventDefault()
+										$.ajax(
+											{
+												url: '/code',
+												type: 'POST',
+												data:
+												{
+													'code': d.code
+												}
+											})
+											.done(function (data)
+											{
+												console.log(data)
+											})
+									})
+							$('#IRCodeList')
+								.append(IRli)
+						})
 				})
-			// .done(function (data)
-			// {
-			// 	console.log(d)
-			// 	var IRli = $('<li><button type="button" class="btn btn-primary">' + d.name + '</button></li>')
-			// 
-			// 	$('button', IRli)
-			// 		.click(
-			// 			function (event)
-			// 			{
-			// 				event.preventDefault()
-			// 				$.ajax(
-			// 					{
-			// 						url: '/code',
-			// 						type: 'POST',
-			// 						data:
-			// 						{
-			// 							'code': d.code
-			// 						}
-			// 					})
-			// 					.done(function (data)
-			// 					{
-			// 						console.log(data)
-			// 					})
-			// 
-			// 			})
-			// 
-			// 
-			// 	$('#IRCodeList')
-			// 		.append(IRli)
-			// })
 		})
-
-
-
-
-
-
 })
