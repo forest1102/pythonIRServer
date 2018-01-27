@@ -30,7 +30,8 @@ def transIRCode():
     return 'success'
 @app.route('/code-from/<int:memo_no>')
 def codeFrom(memo_no):
-    print(read_command(int(memo_no)))    
+    print(memo_no,type(memo_no))
+    print(read_command([memo_no]))    
     return '111'
 if __name__ == '__main__':
     app.debug = True # デバッグモード有効化
