@@ -32,7 +32,7 @@ def transIRCode():
 def codeFrom(memo_no):
     print(memo_no,type(memo_no))
     str=''
-    for d in read_command(memo_no):
+    for d in read_command([memo_no]):
         str+='{:02X}'.format(d)
     print(str)
     return str
