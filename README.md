@@ -2,6 +2,8 @@
 
 a http server to make raspberry pi remote controller
 
+to download http://bit-trade-one.co.jp/support/download/
+
 ## Overview
 
 `pythonIRServer` is a server with Python library, [Flask](http://flask.pocoo.org), to change raspberry pi into remote controller,  
