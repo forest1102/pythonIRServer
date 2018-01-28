@@ -2,7 +2,8 @@
 
 a http server to make raspberry pi remote controller
 
-to download http://bit-trade-one.co.jp/support/download/
+I used 
+- http://bit-trade-one.co.jp/support/download/
 
 ## Overview
 
