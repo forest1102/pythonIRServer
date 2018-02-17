@@ -5,13 +5,19 @@ from command import trans_command,read_command
 # 自身の名称を app という名前でインスタンス化する
 app = Flask(__name__)
 
-
-#context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-#context.load_cert_chain('/home/pi/.ssl/cert.crt',
-#        '/home/pi/.ssl/server_secret.key')
+class IRCode:
+    def __init__(self,phrase,memo_no,code=None):
+        self.phrase=phrase.strip(" ")
+        self.code=code or codeFrom(memo_no)
+    def zipped(self):
+        return {''+self.phrase:self.code}
+    def rawDict(self):
+        return {'phrase':self.phrase,
+                'code':self.code}
 
 @app.route('/')
 def index():
+    print(request)
     return render_template('index.html')
 
 @app.route('/codes')
@@ -20,13 +26,27 @@ def codes():
         d=json.load(f)
         return jsonify(d)
 
+#
+@app.route('/addcode-from/<int:memo_no>',methods=['POST'])
+def addCodeFrom(memo_no):
+    IRcode=IRCode(phrase=request.form['phrase'],
+                  memo_no=memo_no)
+    with open('config/ir.json','r+') as f:
+        data=json.load(f)
+        tmp=data
+        data.update(IRcode.zipped())
+        f.seek(0)
+        json.dump(data,f)
+        f.truncate()
+    return jsonify(IRcode.rawDict())    
+#
+
 @app.route('/addcode',methods=['POST'])
 def addCode():
     print('requested')
     if request.method == 'POST':
-        IRcode={}
-        IRcode[request.form['name']]=request.form['code']
-        print(request.form['name'])
+        IRcode=IRCode(phrase=request.form['phrase'],
+                    code=request.form['code']
         with open('config/ir.json','r+') as f:
             data=json.load(f)
             tmp=data
@@ -52,7 +72,6 @@ def transIRCode():
             IRCodes=json.load(f)
             if phrase in IRCodes:
                 code=IRCodes[phrase]
-                print(phrase)
                 print(code)
                 if request.method=='POST':
                     trans_command(code)
