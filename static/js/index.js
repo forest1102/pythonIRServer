@@ -2,6 +2,10 @@ $(function ()
 {
 	console.log('start jquery, Hey')
 	var IRCodeList=$('#IRCodeList')
+	var TAG={
+		memo_no:$('#memo_no'),
+		name:   $('#name')
+	}
 	$.ajax({
 		url:'https://morita.website/ir/codes'
 	})
@@ -16,33 +20,22 @@ $(function ()
 		.on('submit', function (e)
 		{
 			e.preventDefault()
-			console.log($('#name')
-				.val())
+			console.log(TAG.name.val())
 			console.log('clicked ircode')
+
 			$.ajax(
 				{
-					url: 'https://morita.website/ir/code-from/' + $('#memo_no')
-						.val(),
+					url: 'https://morita.website/ir/addcode-from/'+TAG.memo_no.val(),
+					type: 'POST',
+					data:
+					{
+						phrase: TAG.name.val(),
+					}
 				})
-				.done(function (code)
+				.done(function (d)
 				{
-					console.log(code);
-					$.ajax(
-						{
-							url: 'https://morita.website/ir/addcode',
-							type: 'POST',
-							data:
-							{
-								name: $('#name')
-									.val(),
-								code: code
-							}
-						})
-						.done(function (d)
-						{
-							makeIRCodeli(d.name,d.code)
-							console.log(d)
-						})
+					makeIRCodeli(d.phrase,d.code)
+					console.log(d)
 				})
 		})
 	function makeIRCodeli(name,code){
