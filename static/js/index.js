@@ -42,9 +42,10 @@ $(function ()
 		
 		
 	TAG.remoconBtn
-		.click((e)=>{
+		.click(function(e){
 			e.preventDefault()
 			var phrase=$(this).val()
+			console.log($(this))
 			console.log(phrase)
 			$.ajax({
 				url:'https://morita.website/ir/code',
