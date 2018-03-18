@@ -10,3 +10,7 @@
 .row {
   margin-bottom: 0.5em;
 }
+
+#IRCodeList{
+  list-style-type: none;
+}

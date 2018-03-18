@@ -60,7 +60,7 @@ $(function ()
 		})
 		
 	function makeIRCodeli(name,code){
-		var IRli = $('<li><button type="button" class="btn btn-primary">' + name+ '</button></li>')
+		var irli = $('<li><button type="button" class="btn btn-info">' + name+ '</button></li>')
 
 		$('button', IRli)
 			.click(
