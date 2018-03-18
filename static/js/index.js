@@ -21,8 +21,8 @@ $(function ()
 		.on('submit', function (e)
 		{
 			e.preventDefault()
-			console.log(TAG.name.val())
-			console.log('clicked ircode')
+			// console.log(TAG.name.val())
+			// console.log('clicked ircode')
 
 			$.ajax(
 				{
@@ -36,7 +36,7 @@ $(function ()
 				.done(function (d)
 				{
 					makeIRCodeli(d.phrase,d.code)
-					console.log(d)
+					// console.log(d)
 				})
 		})
 		
@@ -45,8 +45,8 @@ $(function ()
 		.click(function(e){
 			e.preventDefault()
 			var phrase=$(this).val()
-			console.log($(this))
-			console.log(phrase)
+			// console.log($(this))
+			// console.log(phrase)
 			$.ajax({
 				url:'https://morita.website/ir/code',
 				type:'POST',
@@ -54,8 +54,8 @@ $(function ()
 					'phrase':phrase
 				}
 			})
-			.done((d)=>{
-				console.log(d);
+			.done(function(d){
+				// console.log(d);
 			})
 		})
 		
@@ -78,7 +78,7 @@ $(function ()
 						})
 						.done(function (data)
 						{
-							console.log(data)
+							// console.log(data)
 						})
 				})
 		IRCodeList
