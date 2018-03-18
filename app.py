@@ -65,8 +65,7 @@ def transIRCode():
     response={}
     if 'code' in request.form:
         print(request.form['code'])
-        if request.method=='POST':
-            trans_command(request.form['code'])
+        trans_command(request.form['code'])
         return request.form['code'] 
     elif 'phrase' in request.form: 
         phrase=request.form['phrase'].strip(" ")
@@ -75,13 +74,13 @@ def transIRCode():
             if phrase in IRCodes:
                 code=IRCodes[phrase]
                 print(code)
-                if request.method=='POST':
-                    trans_command(code)
+                trans_command(code)
                 return u"""
                 code:{0},
                 phrase:{1}
                 """.format(code,phrase)
-        abort(400,u'unregistered the phrase: {}'.format(phrase))
+            else:
+                abort(400,u'unregistered the phrase: {}'.format(phrase))
     else:
         abort(400,u'request form is invalid')
 @app.route('/code-from/<int:memo_no>')
