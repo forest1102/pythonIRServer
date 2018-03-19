@@ -1,29 +1,35 @@
 # pythonIRServer
 
-a http server to make raspberry pi remote controller
+ウェブサーバを立てて、`raspberry pi` をリモコンにします。  
 
-I used 
+以下のサイトのソースコードを参考にしました。
 - http://bit-trade-one.co.jp/support/download/
 
-## Overview
+## 概要 
 
-`pythonIRServer` is a server with Python library, [Flask](http://flask.pocoo.org), to change raspberry pi into remote controller,  
-with learning remote controller ( [ADRSIR](http://bit-trade-one.co.jp/product/module/adrsir/) ).  
+`pythonIRServer` は、FlaskというPythonライブラリーを用いて、`raspberry pi` を赤外線リモコンへと変化させます。
+今回、赤外線リモコン基板としてADRSIRを使用しました。( [ADRSIR](http://bit-trade-one.co.jp/product/module/adrsir/) ).  
 
-## Features
+## 特徴
 
-- easy to get IR code and output it
+- 赤外線コードを調べる必要なく簡単にリモコン化させることができます。
 
-## Requirements
+## 必要なもの
 
-- Python 3 or more
-- pip, which is to install python library (smbus)
+- raspberry pi
+- ADRSIR(リモコン基板)
+- Python 3 以上
+- pip(smbusという赤外線を送受信するインストール用)
 
-## Usage
+## 使い方  
 
-1. open shell and command `sudo python app.py`
+
+1. 自身の`raspberry pi` にこれをクローンします。
+
+2. `raspberry pi`のコマンドターミナルを開き、以下のコマンドを入力します。 
 
 ``` terminal
+pi@raspberrypi:~$ sudo python app.py
 pi@raspberrypi:~$ cd pythonIRServer/
 pi@raspberrypi:~/pythonIRServer$ sudo python app.py
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
@@ -32,8 +38,8 @@ pi@raspberrypi:~/pythonIRServer$ sudo python app.py
  * Debugger pin code: 204-077-648
 ```
 
-2. go to http://xxx.xxx(your raspberry pi's IP):5000/  
-or using postman 
+3. http://xxx.xxx(your raspberry pi's IP):5000/  
+を開きます。  
 `GET http://______/code-from/(your switch number)`
 NOTE: thenumber startt at 0 to 9
 
