@@ -32,7 +32,9 @@ def codes():
 #
 @app.route('/addcode-from/<int:memo_no>',methods=['POST'])
 def addCodeFrom(memo_no):
+
     IRcode=IRCode(phrase=request.form['phrase'],memo_no=memo_no)
+
     with open('config/ir.json','r+') as f:
         data=json.load(f)
         tmp=data

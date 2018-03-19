@@ -6,6 +6,7 @@ $(function ()
 		memo_no:$('#memo_no'),
 		name:   $('#name'),
 		remoconBtn:$('.remocon-btn')
+
 	}
 	$.ajax({
 		url:'https://morita.website/ir/codes'
