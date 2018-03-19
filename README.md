@@ -28,21 +28,19 @@
 
 2. `raspberry pi`のコマンドターミナルを開き、以下のコマンドを入力します。 
 
-``` terminal
-pi@raspberrypi:~$ sudo python app.py
-pi@raspberrypi:~$ cd pythonIRServer/
-pi@raspberrypi:~/pythonIRServer$ sudo python app.py
- * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
- * Restarting with stat
- * Debugger is active!
- * Debugger pin code: 204-077-648
-```
+  ``` terminal
+  pi@raspberrypi:~$ sudo python app.py
+  pi@raspberrypi:~$ cd pythonIRServer/
+  pi@raspberrypi:~/pythonIRServer$ sudo python app.py
+  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+  * Restarting with stat
+  * Debugger is active!
+  * Debugger pin code: 204-077-648
+  ```
 
-3. http://xxx.xxx(your raspberry pi's IP):5000/  
-を開きます。  
-`GET http://______/code-from/(your switch number)`
-NOTE: thenumber startt at 0 to 9
-
-`POST http://_____/code/(IR code)`
-
-
+3. http://xxx.xxx (your raspberry pi's IP):5000/form を開きます。   
+  そこで、0~9までの値とその番号の基板に登録された赤外線を打ち込むと、config/ir.jsonに登録され、その作られたボタンを押すことで、赤外線を送ることができます。  
+  また、以下のようにCurlやPostman等を使っても可能です。  
+  `GET http://______/code-from/(your switch number)`  
+  注意：基板は1~10で書かれていますが、登録する際は0~9の番号でお願いします。
+4. http://xxx.xxx (your raspberry pi's IP):5000/ を開き、設定したいボタンのValue属性を確認します。その値をコピーし、3で書いたように登録すると使えるようになります。 
