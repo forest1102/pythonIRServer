@@ -4,7 +4,9 @@ $(function ()
 	var IRCodeList=$('#IRCodeList')
 	var TAG={
 		memo_no:$('#memo_no'),
-		name:   $('#name')
+		name:   $('#name'),
+		remoconBtn:$('.remocon-btn')
+
 	}
 	$.ajax({
 		url:'https://morita.website/ir/codes'
@@ -20,8 +22,8 @@ $(function ()
 		.on('submit', function (e)
 		{
 			e.preventDefault()
-			console.log(TAG.name.val())
-			console.log('clicked ircode')
+			// console.log(TAG.name.val())
+			// console.log('clicked ircode')
 
 			$.ajax(
 				{
@@ -35,11 +37,31 @@ $(function ()
 				.done(function (d)
 				{
 					makeIRCodeli(d.phrase,d.code)
-					console.log(d)
+					// console.log(d)
 				})
 		})
+		
+		
+	TAG.remoconBtn
+		.click(function(e){
+			e.preventDefault()
+			var phrase=$(this).val()
+			// console.log($(this))
+			// console.log(phrase)
+			$.ajax({
+				url:'https://morita.website/ir/code',
+				type:'POST',
+				data:{
+					'phrase':phrase
+				}
+			})
+			.done(function(d){
+				// console.log(d);
+			})
+		})
+		
 	function makeIRCodeli(name,code){
-		var IRli = $('<li><button type="button" class="btn btn-primary">' + name+ '</button></li>')
+		var IRli = $('<li><button type="button" class="btn btn-info">' + name+ '</button></li>')
 
 		$('button', IRli)
 			.click(
@@ -57,10 +79,11 @@ $(function ()
 						})
 						.done(function (data)
 						{
-							console.log(data)
+							// console.log(data)
 						})
 				})
 		IRCodeList
 			.append(IRli)
 	}
+	
 })
