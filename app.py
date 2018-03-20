@@ -18,7 +18,7 @@ class IRCode:
         return {'phrase':self.phrase,
                 'code':self.code}
                 
-    def appendToJSON():
+    def appendToJSON(self):
         with open('config/ir.json','r+') as f:
             data=json.load(f)
             tmp=data
@@ -26,13 +26,12 @@ class IRCode:
             f.seek(0)
             json.dump(data,f)
             f.truncate()
-            return data
 
     @staticmethod
     def getIRCodes():
         with open('config/ir.json','r') as f:
             d=json.load(f)
-            return jsonify(d)
+            return (d)
         
 @app.route('/')
 def index():
@@ -45,14 +44,14 @@ def form():
 
 @app.route('/codes')
 def codes():
-    return IRCode.getIRCodes()
+    return jsonify(IRCode.getIRCodes())
 #
 @app.route('/addcode-from/<int:memo_no>',methods=['POST'])
 def addCodeFrom(memo_no):
 
     IRcode=IRCode(phrase=request.form['phrase'],memo_no=memo_no)
 
-    IRCode.appendToJSON()
+    IRcode.appendToJSON()
     return jsonify(IRcode.rawDict())    
 #
 
