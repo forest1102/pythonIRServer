@@ -78,7 +78,7 @@ def transIRCode():
         phrase=request.form['phrase'].strip(" ")
         IRCodeList=IRCode.getIRCodes()
         if phrase in IRCodeList:
-            code=IRCodes[phrase]
+            code=IRCodeList[phrase]
             print(code)
             trans_command(code)
             return u"""
