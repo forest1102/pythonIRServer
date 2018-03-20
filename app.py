@@ -6,14 +6,34 @@ from command import trans_command,read_command
 app = Flask(__name__)
 
 class IRCode:
+    jsonPath='config/ir.json'
     def __init__(self,phrase,memo_no,code=None):
         self.phrase=phrase.strip(" ")
         self.code=code or codeFrom(memo_no)
+        
     def zipped(self):
         return {''+self.phrase:self.code}
+        
     def rawDict(self):
         return {'phrase':self.phrase,
                 'code':self.code}
+                
+    def appendToJSON():
+        with open('config/ir.json','r+') as f:
+            data=json.load(f)
+            tmp=data
+            data.update(self.zipped())
+            f.seek(0)
+            json.dump(data,f)
+            f.truncate()
+            return data
+
+    @staticmethod
+    def getIRCodes():
+        with open('config/ir.json','r') as f:
+            d=json.load(f)
+            return jsonify(d)
+        
 @app.route('/')
 def index():
     print(request)
@@ -25,23 +45,14 @@ def form():
 
 @app.route('/codes')
 def codes():
-    with open('config/ir.json','r') as f:
-        d=json.load(f)
-        return jsonify(d)
-
+    return IRCode.getIRCodes()
 #
 @app.route('/addcode-from/<int:memo_no>',methods=['POST'])
 def addCodeFrom(memo_no):
 
     IRcode=IRCode(phrase=request.form['phrase'],memo_no=memo_no)
 
-    with open('config/ir.json','r+') as f:
-        data=json.load(f)
-        tmp=data
-        data.update(IRcode.zipped())
-        f.seek(0)
-        json.dump(data,f)
-        f.truncate()
+    IRCode.appendToJSON()
     return jsonify(IRcode.rawDict())    
 #
 
@@ -51,13 +62,7 @@ def addCode():
     if request.method == 'POST':
         IRcode=IRCode(phrase=request.form['phrase'],
                     code=request.form['code'])
-        with open('config/ir.json','r+') as f:
-            data=json.load(f)
-            tmp=data
-            data.update(IRcode)
-            f.seek(0)
-            json.dump(data,f)
-            f.truncate()
+        IRcode.appendToJSON()
        	return jsonify(request.form)
     else:
         return render_template('index.html')
@@ -71,18 +76,17 @@ def transIRCode():
         return request.form['code'] 
     elif 'phrase' in request.form: 
         phrase=request.form['phrase'].strip(" ")
-        with open('config/ir.json','r') as f:
-            IRCodes=json.load(f)
-            if phrase in IRCodes:
-                code=IRCodes[phrase]
-                print(code)
-                trans_command(code)
-                return u"""
-                code:{0},
-                phrase:{1}
-                """.format(code,phrase)
-            else:
-                abort(400,u'unregistered the phrase: {}'.format(phrase))
+        IRCodeList=IRCode.getIRCodes()
+        if phrase in IRCodeList:
+            code=IRCodes[phrase]
+            print(code)
+            trans_command(code)
+            return u"""
+            code:{0},
+            phrase:{1}
+            """.format(code,phrase)
+        else:
+            abort(400,u'unregistered the phrase: {}'.format(phrase))
     else:
         abort(400,u'request form is invalid')
 @app.route('/code-from/<int:memo_no>')
