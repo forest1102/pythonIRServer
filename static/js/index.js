@@ -27,7 +27,7 @@ $(function ()
 
 			$.ajax(
 				{
-					url: 'http://localhost:5000/addcode-from/'+TAG.memo_no.val(),
+					url: 'https://morita.website/ir/addcode-from/'+TAG.memo_no.val(),
 					type: 'POST',
 					data:
 					{
@@ -49,7 +49,7 @@ $(function ()
 			// console.log($(this))
 			// console.log(phrase)
 			$.ajax({
-				url:'http://localhost:5000/code',
+				url:'https://morita.website/ir/code',
 				type:'POST',
 				data:{
 					'phrase':phrase
